@@ -7,6 +7,12 @@ class Customer
     @wallet = wallet
   end
 
+  def remove_funds(amount)
+    @wallet -= amount
+  end
+
+
+
 
 
 end
