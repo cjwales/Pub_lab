@@ -84,7 +84,7 @@ class PubTest < MiniTest::Test
   def test_confirm_customer_age()
     assert_equal(true, @pub.confirm_customer_age(@customer1))
     assert_equal(true, @pub.confirm_customer_age(@customer2))
-    assert_equal(nil, @pub.confirm_customer_age(@customer3))
+    assert_nil(nil, @pub.confirm_customer_age(@customer3))
   end
 
 end
