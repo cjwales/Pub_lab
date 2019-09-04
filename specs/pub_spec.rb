@@ -11,8 +11,9 @@ class PubTest < MiniTest::Test
     @pub = Pub.new("The Dog & Duck", 100)
     @wine = Drinks.new("Wine", 5)
     @vodka = Drinks.new("Vodka", 2)
-    @customer1 = Customer.new("Clyde", 10)
-
+    @customer1 = Customer.new("Clyde", 10, 23)
+    @customer2 = Customer.new("Lucy", 10, 18)
+    @customer3 = Customer.new("Mike", 10, 16)
 
   end
 
@@ -47,12 +48,20 @@ class PubTest < MiniTest::Test
     assert_equal(1, @pub.stock_amount)
   end
 
-  def test_sell_drink()
+  def test_sell_drink__legal()
     @pub.add_stock(@wine)
     @pub.add_stock(@vodka)
     @pub.sell_drink(@vodka, @customer1)
     assert_equal(1, @pub.stock_amount())
     assert_equal(102, @pub.till())
+  end
+
+  def test_sell_drink__illegal()
+    @pub.add_stock(@wine)
+    @pub.add_stock(@vodka)
+    @pub.sell_drink(@vodka, @customer3)
+    assert_equal(2, @pub.stock_amount())
+    assert_equal(100, @pub.till())
   end
 
   def test_sell_drink_take_funds_from_customer()
@@ -61,6 +70,21 @@ class PubTest < MiniTest::Test
     @pub.sell_drink(@vodka, @customer1)
     assert_equal(8, @customer1.wallet())
 
+  end
+
+  def test_get_age_from_customer()
+    @pub.get_age_from_customer(@customer2)
+    @pub.get_age_from_customer(@customer1)
+    @pub.get_age_from_customer(@customer3)
+    assert_equal(18, @customer2.age)
+    assert_equal(23, @customer1.age)
+    assert_equal(16, @customer3.age)
+  end
+
+  def test_confirm_customer_age()
+    assert_equal(true, @pub.confirm_customer_age(@customer1))
+    assert_equal(true, @pub.confirm_customer_age(@customer2))
+    assert_equal(nil, @pub.confirm_customer_age(@customer3))
   end
 
 end

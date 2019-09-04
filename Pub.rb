@@ -26,9 +26,21 @@ class Pub
   end
 
   def sell_drink(drink, customer)
-    remove_stock(drink)
-    add_funds_to_till(drink)
-    customer.remove_funds(drink.price)
+    if confirm_customer_age(customer) == true
+      remove_stock(drink)
+      add_funds_to_till(drink)
+      customer.remove_funds(drink.price)
+    end
+  end
+
+  def get_age_from_customer(customer)
+    return customer.age
+  end
+
+  def confirm_customer_age(customer)
+    if get_age_from_customer(customer) >= 18
+      return true
+    end
   end
 
 end
