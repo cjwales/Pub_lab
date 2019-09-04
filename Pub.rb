@@ -25,9 +25,10 @@ class Pub
     @stock.delete(drink)
   end
 
-  def sell_drink(drink)
+  def sell_drink(drink, customer)
     remove_stock(drink)
     add_funds_to_till(drink)
+    customer.remove_funds(drink.price)
   end
 
 end
